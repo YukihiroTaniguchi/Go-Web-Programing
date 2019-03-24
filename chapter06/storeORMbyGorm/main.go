@@ -20,7 +20,7 @@ type Comment struct {
   Id        int
   Content   string
   Author    string `sql:"not null"`
-  postId    int
+  PostId    int
   CreatedAt time.Time
 }
 
@@ -43,11 +43,9 @@ func main() {
 
   comment := Comment{Content: "Nice post!", Author: "Joe"}
   Db.Model(&post).Association("Comments").Append(comment)
-  fmt.Println(post)
   var readPost Post
   Db.Where("author = $1", "Sau Sheong").First(&readPost)
-  fmt.Println(readPost)
   var comments []Comment
   Db.Model(&readPost).Related(&comments)
-  fmt.Println(comments)
+  fmt.Println(comments[0])
 }
